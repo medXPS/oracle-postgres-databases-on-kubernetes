@@ -3,7 +3,7 @@ apiVersion: database.oracle.com/v1alpha1
 kind: SingleInstanceDatabase
 metadata:
   name: adria-ora-sidb-standby
-  namespace: default
+
 spec:
   ## Use only alphanumeric characters for sid up to a maximum of 8 characters
   sid: ORCLS1

@@ -25,7 +25,7 @@ spec:
   charset: AL32UTF8
 
   ## PDB name
-  pdbName: orclpdb1
+  pdbName: adriadb
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
   archiveLog: true
