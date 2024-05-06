@@ -25,6 +25,7 @@ spec:
           memory: "2Gi"
           cpu: "2000m"
       dataVolumeClaimSpec:
+        storageClassName: "ibmc-file-gold"  #create custom  storage class / here we switched to ibm cloud managed kubernetes 
         accessModes:
         - "ReadWriteOnce"
         resources:
@@ -32,6 +33,7 @@ spec:
             storage: 4Gi
       #Write Ahead Log config 
       walVolumeClaimSpec:
+        storageClassName: "ibmc-file-gold" 
         accessModes:
         - "ReadWriteOnce"
         resources:
@@ -55,6 +57,7 @@ spec:
       - name: repo1
         volume:
           volumeClaimSpec:
+            storageClassName: "ibmc-file-gold" 
             accessModes:
             - "ReadWriteOnce"
             resources:
