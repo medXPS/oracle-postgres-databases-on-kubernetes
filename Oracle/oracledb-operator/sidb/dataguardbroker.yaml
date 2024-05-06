@@ -6,7 +6,7 @@ apiVersion: database.oracle.com/v1alpha1
 kind: DataguardBroker
 metadata:
   name: dataguardbroker
-  namespace: default
+
 spec:
   ## Primary DB ref. This can be of kind SingleInstanceDatabase or CloneDB (Specify the name of the primary instance)
   primaryDatabaseRef: "adria-ora-sidb-primary"
