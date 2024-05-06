@@ -1,0 +1,14 @@
+#
+# Copyright (c) 2022, Oracle and/or its affiliates. 
+# Licensed under the Universal Permissive License v 1.0 as shown at http://oss.oracle.com/licenses/upl.
+#
+
+## Append samples you want in your CSV to this file as resources ##
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: orao-ha
+resources:
+  - sidb/singleinstancedatabase.yaml
+  - sidb/singleinstancedatabase_standby.yaml
+  - sidb/dataguardbroker.yaml
+

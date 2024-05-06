@@ -1,0 +1,1 @@
+#r=container-registry.oracle.com --docker-username=MOHAMEDAMMAHA2020@GMAIL.COM --docker-password=fnxbyhks4y#u=woyk   -n orao-ha
