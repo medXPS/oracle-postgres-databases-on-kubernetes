@@ -5,8 +5,7 @@ metadata:
   namespace: pgo-ha
 data:
   init.sql: |
-    -- Create a group 'dev' and grant privileges
-    CREATE GROUP dev;
+    -- grant privileges
     GRANT CONNECT ON DATABASE cih TO "dev-cih-ro" ;
     GRANT USAGE ON SCHEMA public TO "dev-cih-ro" ;
     GRANT CREATE ON SCHEMA public TO "dev-cih-ro" ;

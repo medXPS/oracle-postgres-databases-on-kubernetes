@@ -16,13 +16,13 @@ spec:
     name: adria-init-sql
   instances:
     - name: adria-postgres-db
-      replicas: 3
+      replicas: 2
       resources:
         requests:
           memory: "1Gi"
           cpu: "500m"
         limits:
-          memory: "4Gi"
+          memory: "2Gi"
           cpu: "2000m"
       dataVolumeClaimSpec:
         accessModes:
@@ -103,7 +103,7 @@ spec:
   proxy:
     pgBouncer:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:ubi8-1.21-3
-      replicas: 2
+      replicas: 1
       config:
         global:
           max_client_conn: "10000"
