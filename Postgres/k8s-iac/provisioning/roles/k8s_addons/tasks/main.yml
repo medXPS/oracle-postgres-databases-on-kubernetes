@@ -1,0 +1,13 @@
+---
+- name: Install Argocd Gitops operator for kubernetes 
+  ansible.builtin.include_tasks: argocd-setup.yml
+
+- name: install postgres cluster operator for kubernetes 
+  ansible.builtin.include_tasks: pgo-cluster-setup.yml
+
+- name: install oracle cluster operator  for kubernetes 
+  ansible.builtin.include_tasks: oracle-cluster-setup.yml
+
+- name: install  Haproxy kubernetes ingress controller 
+  ansible.builtin.include_tasks: oracle-cluster-setup.yml
+

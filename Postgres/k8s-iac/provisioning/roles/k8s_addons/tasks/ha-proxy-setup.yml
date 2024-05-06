@@ -1,0 +1,11 @@
+---
+- name: Add HAProxyTech Helm repository
+  shell: helm repo add haproxytech https://haproxytech.github.io/helm-charts
+
+- name: Install HAProxy Kubernetes Ingress controller
+  shell: helm install haproxy-kubernetes-ingress haproxytech/kubernetes-ingress \
+             --create-namespace \
+             --namespace ha-proxy \
+             --set controller.service.nodePorts.http=30000 \
+             --set controller.service.nodePorts.https=30001 \
+             --set controller.service.nodePorts.stat=30002

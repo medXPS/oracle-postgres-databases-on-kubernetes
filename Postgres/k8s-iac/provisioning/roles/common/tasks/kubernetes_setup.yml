@@ -1,0 +1,54 @@
+---
+- name: Remove swapfile from /etc/fstab
+  mount:
+    name: "{{ item }}"
+    fstype: swap
+    state: absent
+  with_items:
+    - swap
+    - none
+
+- name: Disable swap
+  command: swapoff -a
+  when: ansible_swaptotal_mb > 0
+
+  
+- name: Create keyrings directory
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Download Kubernetes key and add to keyring
+  shell: "curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.28/deb/Release.key | gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg"
+  args:
+    executable: /bin/bash
+
+- name: Add Kubernetes repository
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.29/deb/ /"
+    state: present
+    filename: kubernetes.list
+    update_cache: yes
+
+- name: Install Kubernetes binaries
+  apt:
+    name: 
+      - kubelet=1.29.2-1.1
+      - kubeadm=1.29.2-1.1
+      - kubectl=1.29.2-1.1
+    state: present
+    update_cache: yes
+
+
+- name: kubernetes_setup | Fix CRI error
+  ansible.builtin.file:
+    path: /etc/containerd/config.toml
+    state: absent
+
+- name: kubernetes_setup | Restart containerd
+  ansible.builtin.service:
+    name: containerd
+    daemon_reload: true
+    state: restarted
+    enabled: true

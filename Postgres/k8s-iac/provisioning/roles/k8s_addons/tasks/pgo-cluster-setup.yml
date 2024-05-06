@@ -1,0 +1,6 @@
+---
+- name: PGO:Apply namespace using Kustomize
+  shell: kubectl apply -k kustomize/install/namespace
+
+- name: PGO:Apply default resources(crds) using Kustomize
+  shell: kubectl apply --server-side -k kustomize/install/default

@@ -1,0 +1,46 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: oracle-database
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: system.orademo
+  namespace: oracle-database
+stringData:
+   password: "adria"
+
+---
+apiVersion: database.oracle.com/v1alpha1
+kind: SingleInstanceDatabase
+metadata:
+  name: orademo
+  namespace: oracle-database
+spec:
+  sid: ORADEMO
+  cloneFrom: ""
+  edition: free
+  adminPassword:
+    secretName: system.orademo
+    secretKey: password
+    keepSecret: true
+  charset: AL32UTF8
+  pdbName: adria
+  flashBack: false
+  archiveLog: false
+  forceLog: false
+  initParams:
+    cpuCount: 0
+    processes: 100
+    sgaTarget: 1024
+    pgaAggregateTarget: 512
+  image:
+    pullFrom: container-registry.oracle.com/database/free:latest
+  persistence:
+    size: 10Gi
+    storageClass: "local-path" # Adapt this to your storage class of choice
+    accessMode: "ReadWriteOnce"
+  loadBalancer: true
+  replicas: 2

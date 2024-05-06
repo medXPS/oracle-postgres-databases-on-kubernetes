@@ -1,0 +1,12 @@
+---
+- name: join_command | Generate command
+  ansible.builtin.command: kubeadm token create --print-join-command
+  changed_when: true
+  register: join_command_output
+
+- name: join_command | Save join_command to a local file
+  delegate_to: localhost
+  ansible.builtin.copy:
+    content: "{{ join_command_output.stdout }}"
+    dest: "./join-command"
+    mode: 0644

@@ -1,0 +1,70 @@
+# apiVersion: networking.k8s.io/v1
+# kind: Ingress
+# metadata:
+#   name: pgo-ingress-v1
+#   namespace: pgo-ha
+#   annotations:
+#     # # add an annotation indicating the issuer to use
+#     # cert-manager.io/cluster-issuer: letsencrypt-issuer
+#     kubernetes.io/ingress.class: haproxy
+# spec:
+#   rules:
+#   - http:
+#       paths:
+#       - path: /pgbouncer
+#         pathType: Prefix
+#         backend:
+#           service:
+#             name: adria-pg-db-pgbouncer  # service name
+#             port:
+#               number: 5432
+#       # - path: /
+#       #   pathType: Prefix
+#       #   backend:
+#       #     service:
+#       #       name: nginx-service
+#       #       port:
+#       #         number: 80
+#       # - path: /grafana  # corrected path
+#       #   pathType: Prefix
+#       #   backend:
+#       #     service:
+#       #       name: crunchy-grafana
+#       #       port:
+#       #         number: 3000
+#       # - path: /prom  # corrected path
+#       #   pathType: Prefix
+#       #   backend:
+#       #     service:
+#       #       name: crunchy-prometheus
+#       #       port:
+#       #         number: 9090
+#   tls:
+#     - secretName: pgbouncer-tls-secret  # secret name
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pgbouncer-ingress
+  namespace: pgo-ha
+  annotations:
+    kubernetes.io/ingress.class: haproxy
+spec:
+  rules:
+  - http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: adria-pg-db-pgbouncer
+            port:
+              number: 5432
+      - pathType: Prefix
+        path: "/hello"
+        backend:
+          service:
+            name: hello-world-service
+            port:
+              number: 8080
+  tls:
+    - secretName: pgbouncer-tls-secret  # secret name

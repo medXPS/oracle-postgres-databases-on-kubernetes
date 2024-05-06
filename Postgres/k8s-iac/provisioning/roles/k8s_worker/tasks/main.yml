@@ -1,0 +1,16 @@
+---
+- name: Setup Docker
+  include_role:
+    name: common
+    tasks_from: docker_setup
+
+- name: Setup Kubernetes
+  include_role:
+    name: common
+    tasks_from: kubernetes_setup
+
+- name: Configure node ip
+  include_tasks: configure_node.yml
+
+- name: Join command
+  include_tasks: join_command.yml

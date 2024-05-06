@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","rsync__exclude":[".vagrant/","node_modules/"],"guestpath":"/vagrant","hostpath":"/home/ansible/Adria-DevOps-project/DB-k8s-replication/k8s-cluster-provisioning","disabled":false,"__vagrantfile":true,"exclude":[".vagrant/","node_modules/"],"owner":"vagrant","group":"vagrant"}}}

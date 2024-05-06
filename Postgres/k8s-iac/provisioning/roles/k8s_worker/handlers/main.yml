@@ -1,0 +1,14 @@
+---
+# handlers file for k8s_master
+
+- name: "docker start"
+  service:
+    name: docker
+    state: started
+    enabled: true
+
+- name: "restart containerd"
+  service:
+    name: containerd
+    state: restarted
+    enabled: true

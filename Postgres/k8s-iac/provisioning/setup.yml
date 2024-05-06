@@ -1,0 +1,17 @@
+---
+- name: Configure Kubernetes Master Nodes
+  hosts: [kubemasters]
+  become: yes
+  roles:
+  - role: 'k8s_master'
+
+- name: Configure Kubernetes Worker Nodes
+  hosts: [kubeworkers]
+  become: yes
+  roles:
+  - role: 'k8s_worker'
+- name: Adding Kubernetes utilites 
+  hosts: [kubemasters]
+  become: yes
+  roles:
+    -role: 'k8s-addons'

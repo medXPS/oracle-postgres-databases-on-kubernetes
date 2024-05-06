@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adria-pg-db-pgbouncer-loadbalancer
+  namespace: pgo-ha
+spec:
+  ports:
+  - name: pgbouncer
+    port: 5432
+    protocol: TCP
+    targetPort: pgbouncer
+  selector:
+    postgres-operator.crunchydata.com/cluster: adria-pg-db
+    postgres-operator.crunchydata.com/role: pgbouncer
+  type: LoadBalancer
