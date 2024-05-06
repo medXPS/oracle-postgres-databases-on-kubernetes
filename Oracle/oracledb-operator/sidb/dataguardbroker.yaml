@@ -17,7 +17,7 @@ spec:
     - adria-ora-sidb-standby
   ## Type of service . Applicable on cloud enviroments only
   ## if loadBalService : false , service type = "NodePort" . else "LoadBalancer"
-  loadBalancer: false
+  loadBalancer: true
 
   ## Protection Mode for dg configuration . MaxAvailability or MaxPerformance
   protectionMode: MaxAvailability
