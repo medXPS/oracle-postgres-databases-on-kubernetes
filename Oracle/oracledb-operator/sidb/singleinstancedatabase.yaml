@@ -91,7 +91,7 @@ spec:
 
   ## Type of service . Applicable on cloud enviroments only
   ## if loadBalService : false, service type = "NodePort" else "LoadBalancer"
-  loadBalancer: false
+  loadBalancer: true
   
   ## 'listenerPort' and 'tcpsListenerPort' fields customizes port cofigurations for normal and tcps database listeners
   ## 'tcpsListenerPort' will come in effect only when 'enableTCPS' field is set
