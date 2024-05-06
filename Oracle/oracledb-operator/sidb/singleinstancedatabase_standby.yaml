@@ -15,10 +15,10 @@ spec:
   ## Reference to a source primary database from which
   ## Format: 1. Intra-cluster: you can give name of the primary database or the database connect string in `<host>:<port>/<service_name>` format
   ##         2. Inter-cluster: Database connect string in `<host>:<port>/<service_name>` format
-  primaryDatabaseRef: ""
+  primaryDatabaseRef: "adria-ora-sidb-primary"
 
   ## Enable this flag for creating Physical Standby Database
-  createAsStandby: false
+  createAsStandby: true
 
   ## DB edition. N/A if cloning from a Source DB in current K8s cluster (if cloneFrom is set to a database ref)
   ## Valid values for edition are enterprise, standard or express
@@ -42,7 +42,7 @@ spec:
   flashBack: false
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
-  archiveLog: false
+  archiveLog: true
 
   ## Enable/Disable ForceLogging
   forceLog: false
