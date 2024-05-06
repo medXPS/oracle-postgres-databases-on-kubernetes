@@ -15,7 +15,7 @@ spec:
   ## Reference to a source primary database from which
   ## Format: 1. Intra-cluster: you can give name of the primary database or the database connect string in `<host>:<port>/<service_name>` format
   ##         2. Inter-cluster: Database connect string in `<host>:<port>/<service_name>` format
-  primaryDatabaseRef: "adria-ora-sidb-primary"
+  #primaryDatabaseRef: "adria-ora-sidb-primary"
 
   ## Enable this flag for creating Physical Standby Database
   createAsStandby: true
