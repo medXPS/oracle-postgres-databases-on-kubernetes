@@ -39,7 +39,7 @@ spec:
   pdbName: adriadb
 
   ## Enable/Disable Flashback
-  flashBack: false
+  flashBack: true
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
   archiveLog: true
