@@ -11,5 +11,5 @@ resources:
  # - sidb/registry-secret.yml
   - sidb/singleinstancedatabase.yaml
   - sidb/singleinstancedatabase_standby.yaml
-  # - sidb/dataguardbroker.yaml
+  - sidb/dataguardbroker.yaml
 
