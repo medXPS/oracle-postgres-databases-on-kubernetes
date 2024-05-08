@@ -146,6 +146,7 @@ config:
   databases:
     cih:
       host: pgpool.pgo-ha.svc.cluster.local
+      
       port: 9999
   pgbouncer:
     max_client_conn: 10000
