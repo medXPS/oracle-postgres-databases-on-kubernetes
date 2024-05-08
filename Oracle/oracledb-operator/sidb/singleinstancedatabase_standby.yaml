@@ -85,7 +85,7 @@ spec:
   persistence:
     size: 6Gi
     ## a storage class should be created, in local env we will use `standard` (default minikube storage class)
-    storageClass: "ibmc-file-gold"
+    storageClass: "standard"
     accessMode: "ReadWriteOnce"
     volumeName: ""
 
