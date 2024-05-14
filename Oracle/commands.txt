@@ -1,1 +1,1 @@
-#r=container-registry.oracle.com --docker-username=MOHAMEDAMMAHA2020@GMAIL.COM --docker-password=fnxbyhks4y#u=woyk   -n orao-ha
+kubectl create secret docker-registry regcred  --docker-server=container-registry.oracle.com  --docker-username=MOHAMEDAMMAHA2020@GMAIL.COM  --docker-password=vbujS0kpMf6_j0hS681H  -n orao-ha
