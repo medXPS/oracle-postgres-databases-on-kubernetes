@@ -6,7 +6,8 @@
 apiVersion: database.oracle.com/v1alpha1
 kind: SingleInstanceDatabase
 metadata:
-  # sidb-sample should have already been created using singleinstancedatabase_create.yaml
+  # Creates base sidb-sample. Use singleinstancedatabase_clone.yaml for cloning
+  #                           and singleinstancedatabase_patch.yaml for patching
   name: sidb-sample
   namespace: default
 spec:
@@ -25,18 +26,29 @@ spec:
   charset: AL32UTF8
 
   ## PDB name
-  pdbName: adriadb
+  pdbName: orclpdb1
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
   archiveLog: true
 
-  ## Patched Database image
-  ## Using the source base image container-registry.oracle.com/database/enterprise:latest
-  ## build patched DB images following instructions at
-  ## https://github.com/oracle/docker-images/tree/main/OracleDatabase/SingleInstance/extensions/patching
+  ## Enable TCPS
+  enableTCPS: true
+
+  ## User specified TLS-Cert Secret
+  ## The following specified TLS certs will be used instead of self-signed
+  tcpsTlsSecret: my-tls-secret
+
+  ## TCPS Certificate Renewal Interval: (Valid for Self-Signed Certificates)
+  ## The time after which TCPS certificate will be renewed if TCPS connections are enabled.
+  ## tcpsCertRenewInterval can be in hours(h), minutes(m) and seconds(s); e.g. 4380h, 8760h etc.
+  ## Maximum value is 8760h (1 year), Minimum value is 24h; Default value is 8760h (1 year)
+  ## If this field is commented out/removed from the yaml, it will disable the auto-renewal feature for TCPS certificate
+  tcpsCertRenewInterval: 8760h
+
+  ## Database image details
   image:
-    pullFrom:
-    pullSecrets:
+    pullFrom: container-registry.oracle.com/database/enterprise:latest
+    pullSecrets: oracle-container-registry-secret
 
   ## size is the required minimum size of the persistent volume
   ## storageClass is specified for automatic volume provisioning

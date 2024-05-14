@@ -6,17 +6,16 @@
 apiVersion: database.oracle.com/v1alpha1
 kind: SingleInstanceDatabase
 metadata:
-  # Creates base sidb-sample. Use singleinstancedatabase_clone.yaml for cloning
-  #                           and singleinstancedatabase_patch.yaml for patching
+  # sidb-sample should have already been created using singleinstancedatabase_create.yaml
   name: sidb-sample
   namespace: default
 spec:
   
   ## Use only alphanumeric characters for sid
-  sid: XE
+  sid: ORCL1
 
   ## DB edition.
-  edition: express
+  edition: enterprise
 
   ## Secret containing SIDB password mapped to secretKey 
   adminPassword:
@@ -31,19 +30,13 @@ spec:
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
   archiveLog: true
 
-  ## Enable TCPS
-  enableTCPS: true
-
-  ## TCPS Certificate Renewal Interval: The time after which TCPS certificate will be renewed if TCPS connections are enabled.
-  ## tcpsCertRenewInterval can be in hours(h), minutes(m) and seconds(s); e.g. 4380h, 8760h etc.
-  ## Maximum value is 8760h (1 year), Minimum value is 24h; Default value is 8760h (1 year)
-  ## If this field is commented out/removed from the yaml, it will disable the auto-renewal feature for TCPS certificate
-  tcpsCertRenewInterval: 8760h
-
-  ## Database image details
+  ## Patched Database image
+  ## Using the source base image container-registry.oracle.com/database/enterprise:latest
+  ## build patched DB images following instructions at
+  ## https://github.com/oracle/docker-images/tree/main/OracleDatabase/SingleInstance/extensions/patching
   image:
-    pullFrom: container-registry.oracle.com/database/enterprise:latest
-    pullSecrets: oracle-container-registry-secret
+    pullFrom:
+    pullSecrets:
 
   ## size is the required minimum size of the persistent volume
   ## storageClass is specified for automatic volume provisioning
