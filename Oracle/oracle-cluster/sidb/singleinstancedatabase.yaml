@@ -39,17 +39,16 @@ spec:
   pdbName: adriadb
 
   ## Enable/Disable Flashback
-  flashBack: true
+  flashBack: false
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
-  archiveLog: true
+  archiveLog: false
 
   ## Enable/Disable ForceLogging
-  forceLog: true
+  forceLog: false
 
   ## Enable TCPS
-  enableTCPS: true
-
+  enableTCPS: false
   ## TCPS Certificate Renewal Interval: The time after which TCPS certificate will be renewed if TCPS connections are enabled.
   ## tcpsCertRenewInterval can be in hours(h), minutes(m) and seconds(s); e.g. 4380h, 8760h etc.
   ## Maximum value is 8760h (1 year), Minimum value is 24h; Default value is 8760h (1 year)
@@ -60,11 +59,11 @@ spec:
   ## Specify both sgaSize and pgaSize (in MB) or dont specify both
   ## Specify Non-Zero value to use
   ## You cannot change these initParams for Oracle Database Express (XE) edition
-  initParams:
-    cpuCount: 2
-    processes: 100
-    sgaTarget: 1024
-    pgaAggregateTarget: 512
+   initParams:
+    cpuCount: 0
+    processes: 0
+    sgaTarget: 0
+    pgaAggregateTarget: 0
 
   ## Database image details
   ## Base DB images are available at container-registry.oracle.com or build from https://github.com/oracle/docker-images/tree/main/OracleDatabase/SingleInstance
