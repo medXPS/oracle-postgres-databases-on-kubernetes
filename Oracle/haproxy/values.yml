@@ -1,0 +1,57 @@
+# Start with generic settings
+serviceAccount:
+  create: true
+
+image:
+  repository: haproxytech/haproxy-alpine
+  tag: latest # or a specific stable tag 
+
+# Enable rolling deployments for updates
+checksumConfigMap: 
+  enabled: true
+
+# Set up your deployment (or DaemonSet if you need HAProxy on every node)
+kind: Deployment
+replicaCount: 1
+
+# Configuration for HAProxy container
+args:
+  enabled: true
+  defaults: ["-f", "/usr/local/etc/haproxy/haproxy.cfg"] 
+
+# Configure the HAProxy configuration file
+configMount:
+  mountPath: /usr/local/etc/haproxy/haproxy.cfg
+  subPath: haproxy.cfg
+
+config: | 
+  global
+    log stdout format raw local0
+    maxconn 4096 # Adjust according to expected load
+
+  defaults
+    log global
+    timeout connect 5s
+    timeout client 30s 
+    timeout server 30s  
+
+  frontend main
+    bind *:1521
+    use_backend writes_db if { payload(0,0,string) -m reg -i ^insert|^update|^delete|^create|^alter|^drop }
+    default_backend reads_db
+
+  backend writes_db
+    server primary_db adria-ora-sidb-primary:1521 check
+
+  backend reads_db
+    balance roundrobin
+    server standby_db adria-ora-sidb-standby:1521 check
+
+
+# # Service definition - We'll use NodePort
+# service:
+#   type: NodePort
+#   ports:
+#     - port: 1521
+#       targetPort: 1521
+#       nodePort: 30000
