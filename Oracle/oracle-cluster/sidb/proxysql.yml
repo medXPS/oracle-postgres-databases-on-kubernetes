@@ -10,8 +10,8 @@ spec:
     matchLabels:
       app: proxysql
       tier: frontend
-  strategy:
-    type: RollingUpdate
+  # strategy:
+  #   type: RollingUpdate
   template:
     metadata:
       labels:
@@ -35,23 +35,4 @@ spec:
       - name: proxysql-config
         configMap:
           name: proxysql-configmap
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: proxysql
-  labels:
-    app: proxysql
-    tier: frontend
-spec:
-  type: NodePort
-  ports:
-  - nodePort: 30033
-    port: 6033
-    name: proxysql-oracle
-  - nodePort: 30032
-    port: 6032
-    name: proxysql-admin
-  selector:
-    app: proxysql
-    tier: frontend
+
