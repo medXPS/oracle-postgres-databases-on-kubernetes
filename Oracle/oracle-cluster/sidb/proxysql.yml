@@ -26,7 +26,8 @@ spec:
         volumeMounts:
         - name: proxysql-config
           mountPath: /etc/proxysql.cnf
-          # subPath: proxysql.cnf
+          readOnly: true
+       
         ports:
         - containerPort: 6033
           name: proxysql-oracle
