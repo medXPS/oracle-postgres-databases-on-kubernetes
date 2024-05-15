@@ -25,7 +25,7 @@ spec:
         name: proxysql
         volumeMounts:
         - name: proxysql-config
-          mountPath: /etc/proxysql.cnf
+          mountPath: /etc/proxysql/proxysql.cnf
           readOnly: true
        
         ports:
