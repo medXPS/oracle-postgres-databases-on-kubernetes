@@ -12,9 +12,9 @@ resources:
   - sidb/singleinstancedatabase.yaml
   - sidb/singleinstancedatabase_standby.yaml
   - sidb/dataguardbroker.yaml
-  - sidb/proxysql-configmap.yml
-  # - observability/databaseobserver.yaml
-  - sidb/proxysql.yml
+  # - sidb/proxysql-configmap.yml
+  # # - observability/databaseobserver.yaml
+  # - sidb/proxysql.yml
   
  
   # +kubebuilder:scaffold:manifestskustomizesamples
