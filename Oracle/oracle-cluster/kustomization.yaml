@@ -14,7 +14,7 @@ resources:
   - sidb/dataguardbroker.yaml
   - sidb/proxysql-configmap.yml
   # # - observability/databaseobserver.yaml
-  # - sidb/proxysql.yml
+  - sidb/proxysql.yml
   
  
   # +kubebuilder:scaffold:manifestskustomizesamples
