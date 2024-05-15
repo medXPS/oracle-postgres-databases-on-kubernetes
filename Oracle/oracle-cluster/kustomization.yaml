@@ -14,7 +14,7 @@ resources:
   - sidb/dataguardbroker.yaml
   - sidb/proxysql-configmap.yml
   - sidb/proxysql.yml
-  - sidb/proxysql-svc.yml
+
   # # - observability/databaseobserver.yaml
 
   

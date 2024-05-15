@@ -1,3 +1,4 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -25,7 +26,7 @@ spec:
         volumeMounts:
         - name: proxysql-config
           mountPath: /etc/proxysql.cnf
-          subPath: proxysql.cnf
+          # subPath: proxysql.cnf
         ports:
         - containerPort: 6033
           name: proxysql-oracle
@@ -36,3 +37,23 @@ spec:
         configMap:
           name: proxysql-configmap
 
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxysql
+  labels:
+    app: proxysql
+    tier: frontend
+spec:
+  type: NodePort
+  ports:
+  - nodePort: 30033
+    port: 6033
+    name: proxysql-oracle
+  - nodePort: 30032
+    port: 6032
+    name: proxysql-admin
+  selector:
+    app: proxysql
+    tier: frontend
