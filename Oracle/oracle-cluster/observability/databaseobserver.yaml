@@ -24,7 +24,7 @@ spec:
     image: "container-registry.oracle.com/database/observability-exporter:latest"
     configuration:
       configmap:
-        key: "config.toml"
+        key: "sample_config.toml"
         configmapName: "devcm-oradevdb-config"
 
     service:
