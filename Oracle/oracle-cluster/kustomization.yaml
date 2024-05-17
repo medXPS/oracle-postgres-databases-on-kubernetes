@@ -15,7 +15,7 @@ resources:
   # - sidb/proxysql-configmap.yml
   # - sidb/proxysql.yml
 
-  # # - observability/databaseobserver.yaml
+  - observability/databaseobserver.yaml
 
   
  
