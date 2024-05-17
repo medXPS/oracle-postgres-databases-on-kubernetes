@@ -13,9 +13,9 @@ spec:
       key: "password"
       secret: db-secret
 
-    # dbConnectionString:
-    #   key: "connection"
-    #   secret: db-secret
+    dbConnectionString:
+      key: "connection"
+      secret: db-secret
 
     # dbWallet:
     #   secret: instance-wallet
