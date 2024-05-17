@@ -21,7 +21,7 @@ spec:
     #   secret: instance-wallet
 
   exporter:
-    image: "container-registry.oracle.com/database/observability-exporter:latest"
+    image: "container-registry.oracle.com/database/observability-exporter:1.2.1"
     configuration:
       configmap:
         key: "sample_config.toml"
