@@ -13,12 +13,12 @@ spec:
       key: "password"
       secret: db-secret
 
-    dbConnectionString:
-      key: "connection"
-      secret: db-secret
+    # dbConnectionString:
+    #   key: "connection"
+    #   secret: db-secret
 
-    dbWallet:
-      secret: instance-wallet
+    # dbWallet:
+    #   secret: instance-wallet
 
   exporter:
     image: "container-registry.oracle.com/database/observability-exporter:latest"
@@ -37,8 +37,8 @@ spec:
 
   replicas: 1
 
-  ociConfig:
-    configMapName: oci-cred
-    secretName: oci-privatekey
+  # ociConfig:
+  #   configMapName: oci-cred
+  #   secretName: oci-privatekey
 
 
