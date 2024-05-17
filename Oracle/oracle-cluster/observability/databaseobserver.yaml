@@ -16,7 +16,7 @@ spec:
     dbConnectionString:
       key: "connection"
       secret: db-secret
-
+# v1
     # dbWallet:
     #   secret: instance-wallet
 
