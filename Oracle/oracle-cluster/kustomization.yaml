@@ -10,10 +10,10 @@ resources:
 
 
   - sidb/singleinstancedatabase.yaml
-  - sidb/singleinstancedatabase_standby.yaml
-  - sidb/dataguardbroker.yaml
-  - sidb/proxysql-configmap.yml
-  - sidb/proxysql.yml
+  # - sidb/singleinstancedatabase_standby.yaml
+  # - sidb/dataguardbroker.yaml
+  # - sidb/proxysql-configmap.yml
+  # - sidb/proxysql.yml
 
   # # - observability/databaseobserver.yaml
 
