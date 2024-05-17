@@ -48,7 +48,7 @@ spec:
   forceLog: true
 
   ## Enable TCPS
-  enableTCPS: true
+  enableTCPS: false
 
   ## TCPS Certificate Renewal Interval: The time after which TCPS certificate will be renewed if TCPS connections are enabled.
   ## tcpsCertRenewInterval can be in hours(h), minutes(m) and seconds(s); e.g. 4380h, 8760h etc.
