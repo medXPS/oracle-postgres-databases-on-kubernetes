@@ -1,1 +1,3 @@
 kubectl create secret docker-registry regcred  --docker-server=container-registry.oracle.com  --docker-username=MOHAMEDAMMAHA2020@GMAIL.COM  --docker-password=vbujS0kpMf6_j0hS681H  -n orao-ha
+
+kubectl create secret generic admin-password  --from-literal=sidb-admin-password='adria##' -n orao-ha
