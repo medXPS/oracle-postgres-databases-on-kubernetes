@@ -202,7 +202,6 @@ This comprehensive guide walks you through deploying a highly available Oracle S
 ## Additional Notes
 
 - Fine-tune the metrics collected by modifying the `sample_config.toml` file.
-- Regular backups are crucial for data protection.
-- Secure your database and Kubernetes cluster with appropriate measures (network policies, authentication, etc.).
+- You can create more kustomized dashboards using grafana  
 
-Let me know if you have any other questions or modifications.
+if you have any Question mail me on : m.ammaha@outlook.com
