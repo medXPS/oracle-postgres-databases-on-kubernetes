@@ -1,134 +1,226 @@
-# ora-operator-
-#create Nexus credentials secret 
-kubectl create secret generic regcred --from-file=.dockerconfigjson=$HOME/.docker/config.json  --type=kubernetes.io/dockerconfigjson -n orao-ha
-# Create  SIDB credentials secret 
-kubectl create secret generic admin-password --from-literal=sidb-admin-password='Kube#adria#2024' -n orao-ha
+# Setting Up Highly Available Oracle SIDB with Monitoring on Kubernetes
 
------
-Monittoring : 
----Kubernetes
--git repo :https://github.com/oracle/oracle-db-appdev-monitoring
-1)*Create a config map for you metrics definition file (optional)*
+This comprehensive guide walks you through deploying and managing a highly available Oracle Single Instance Database (SIDB) on Kubernetes using the Oracle Database Operator (OraOperator). Additionally, you'll learn how to set up comprehensive monitoring for your database using Prometheus and Grafana.
 
-CMD: kubectl create cm db-metrics-txeventq-exporter-config --from-file=txeventq-metrics.toml -n orao-ha
+## Table of Contents
 
-2) Deploy the Oracle Database Observability exporter
+1. Prerequisites
+2. Installing OraOperator
+3. Deploying the Primary SIDB
+4. Deploying the Standby SIDB
+5. Enabling Data Guard for High Availability
+6. Setting Up Observability (Monitoring)
+    * 6.1 Creating a Monitoring User in Oracle
+    * 6.2 Creating the Secret for the Exporter
+    * 6.3 Deploying the Exporter
+    * 6.4 Configuring the Exporter
+7. Installing and Configuring Prometheus
+8. Installing and Configuring Grafana
+9. Troubleshooting
+10. Conclusion
 
-CMD : < kubectl apply -f metrics-exporter-deployment.yaml -n orao-ha>
+## 1. Prerequisites
 
-```## Copyright (c) 2021, 2023, Oracle and/or its affiliates.
-## Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: metrics-exporter
-  namespace: ora-ha      #check it for Kustomize 
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: metrics-exporter
-  template:
-    metadata:
-      labels:
-        app: metrics-exporter
-    spec:
-      containers:
-      - name: metrics-exporter
-        image: container-registry.oracle.com/database/observability-exporter:1.0.0
-        imagePullPolicy: Always
-        env:
-          # uncomment and customize the next item if you want to provide custom metrics definitions
-          #- name: CUSTOM_METRICS
-          #  value: /oracle/observability/txeventq-metrics.toml
-          - name: TNS_ADMIN
-            value: "/oracle/tns_admin"
-          - name: DB_USERNAME
-            valueFrom:
-              secretKeyRef:
-                name: db-secret   #specify secret used  to store USERNAME of the PDB
-                key: username
-                optional: false
-          - name: DB_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: db-secret  #specify secret used  to store PASSWORD of the PDB
-                key: password
-                optional: false
-          # update the connect string below for your database - can be simple format, or use a tns name as shown:
-          - name: DB_CONNECT_STRING
-            value: "DEVDB_TP?TNS_ADMIN=$(TNS_ADMIN)"
-        volumeMounts:
-          - name: tns-admin
-            mountPath: /oracle/tns_admin
-          # uncomment and customize the next item if you want to provide custom metrics definitions
-          #- name: config-volume
-          #  mountPath: /oracle/observability/txeventq-metrics.toml
-          #  subPath: txeventq-metrics.toml
-        resources:
-          requests:
-            memory: "64Mi"
-            cpu: "250m"
-          limits:
-            memory: "128Mi"
-            cpu: "500m"  
-        ports:
-        - containerPort: 8080
-      restartPolicy: Always
-      volumes:
-        - name: tns-admin
-          configMap:
-            name: db-metrics-tns-admin
-        # uncomment and customize the next item if you want to provide custom metrics definitions
-        #- name: config-volume
-        #  configMap:
-        #    name: db-metrics-txeventq-exporter-config```
+* Kubernetes cluster (e.g., Minikube, a cloud provider's cluster)
+* Oracle Container Registry credentials
+* SQL*Plus or another Oracle SQL client installed locally
+* Helm package manager (v3 or later)
 
---> Verify the exporter "kubectl logs -f svc/metrics-exporter -n orao-ha"
-3)DEPLOY THE exporter svc 
+## 2. Installing OraOperator
 
-kubectl apply -f metrics-exporter-service.yaml
+1. **Create Namespace:**
+   ```bash
+   kubectl create namespace orao-ha
+   ```
 
+2. **Create Oracle Container Registry Secret:**
+
+   ```bash
+   kubectl create secret docker-registry regcred \
+       --docker-server=container-registry.oracle.com \
+       --docker-username=<your_username> \
+       --docker-password=<your_token> \
+       -n orao-ha
+   ```
+
+   * Replace placeholders with your actual Oracle credentials.
+
+3. **Create SIDB Admin Password Secret:**
+
+   ```bash
+   kubectl create secret generic admin-password --from-literal=sidb-admin-password='<your_strong_password>' -n orao-ha
+   ```
+
+   * Replace `<your_strong_password>` with a strong password.
+
+4. **Install Cert-manager:**
+
+   ```bash
+   kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.14.4/cert-manager.yaml
+   ```
+
+5. **Create ClusterRoleBinding:**
+
+   ```bash
+   kubectl apply -f https://raw.githubusercontent.com/oracle/oracle-database-operator/master/deploy/rbac/oracle-database-operator-clusterrolebinding.yaml
+   ```
+
+6. **Deploy OraOperator:**
+
+   ```bash
+   kubectl apply -f https://raw.githubusercontent.com/oracle/oracle-database-operator/master/deploy/crd_and_operator.yaml
+   ```
+
+7. **Verify Installation:**
+   ```bash
+   kubectl get pods -n oracle-database-operator-system
+   ```
+
+## 3. Deploying the Primary SIDB
+
+1. **Install the Oracle Database Helm chart:**
+    ```bash
+    helm repo add oraclecharts https://oracle.github.io/charts
+    helm repo update
+    helm install adria-ora-sidb oraclecharts/oracle-sidb -n orao-ha -f sidb/sidb_values.yaml
+    ```
+    * Replace `sidb/sidb_values.yaml` with your custom `values.yaml` path, adjusting parameters as needed.
+
+## 4. Deploying the Standby SIDB
+
+1. **Modify `sidb_values.yaml`:**
+   * Uncomment or add the configuration for the standby instance in your `sidb_values.yaml` file.
+2. **Upgrade the Helm Release:**
+    ```bash
+    helm upgrade adria-ora-sidb oraclecharts/oracle-sidb -n orao-ha -f sidb/sidb_values.yaml
+    ```
+
+## 5. Enabling Data Guard for High Availability
+
+1. **Modify `sidb_values.yaml`:**
+   * Uncomment or add the Data Guard configuration in your `sidb_values.yaml` file.
+
+2. **Upgrade the Helm Release:**
+    ```bash
+    helm upgrade adria-ora-sidb oraclecharts/oracle-sidb -n orao-ha -f sidb/sidb_values.yaml
+    ```
+
+## 6. Setting Up Observability (Monitoring)
+
+### 6.1 Creating a Monitoring User in Oracle
+
+1. **Port-Forward Database:** 
+   ```bash
+   kubectl port-forward svc/adria-ora-sidb-primary-ext -n orao-ha 1521:1521
+   ```
+
+2. **Connect to Database (SQL*Plus):**
+
+   ```bash
+   sqlplus sys/<your_password>@localhost:1521/ORCLP1 AS SYSDBA
+   ```
+   * replace `ORCLP1` with your PDB name
+
+3. **Create the `c##monitor` User and Grant Privileges:**
+
+   ```sql
+   CREATE USER c##monitor IDENTIFIED BY <strong_password>;
+   GRANT CREATE SESSION, SELECT ANY DICTIONARY, SELECT_CATALOG_ROLE, SELECT ON V_$DATABASE, SELECT ON V_$INSTANCE, SELECT ON V_$SYSMETRIC, SELECT ON V_$SYSSTAT, SELECT ON V_$SESSTAT, SELECT ON V_$SQLSTATS TO C##MONITOR;
+   ```
+
+4. **Commit Changes:**
+   ```sql
+   COMMIT;
+   ```
+ 
+### 6.2 Creating the Secret for the Exporter
+
+```bash
+kubectl create secret generic db-secret \
+    --from-literal=username='c##monitor' \
+    --from-literal=password='<your_password>' \
+    --from-literal=connection='adria-ora-sidb-primary.orao-ha.svc.cluster.local:1521/ORCLP1' -n orao-ha
 ```
-## Copyright (c) 2021, 2023, Oracle and/or its affiliates.
-## Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
-apiVersion: v1
-kind: Service
-metadata:
-  name: metrics-exporter-svc
-  namespace: orao-ha
-  labels:
-    app: metrics-exporter
-    release: stable
-spec:
-  type: ClusterIP
-  ports:
-    - port: 9161
-      name: metrics
-      targetPort: 9161
-  selector:
-    app: metrics-exporter
 
-```
-4) Create a Kubernetes service monitor
-CMD : <kubectl apply -f metrics-service-monitor.yaml -n orao-ha>
+### 6.3 Deploying the Exporter
 
+   ```bash
+   kubectl apply -f observability/databaseobserver.yaml -n orao-ha
+   ```
+### 6.4 Configuring the Exporter
+
+Update the  ```databaseobserver.yaml`` 
+```yaml
+  exporter:
+    image: "container-registry.oracle.com/database/observability-exporter:latest [invalid URL removed]"
+    configuration:
+      configmap:
+        key: "sample_config.toml"
+        configmapName: "devcm-oradevdb-config"
+
+    service:
+      port: 9161
 ```
-## Copyright (c) 2021, 2023, Oracle and/or its affiliates.
-## Licensed under the Universal Permissive License v 1.0 as shown at https://oss.oracle.com/licenses/upl/
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: prometheus-metrics-exporter
-  namespace: orao-ha
-  labels:
-    app: metrics-exporter
-    release: stable
-spec:
-  endpoints:
-    - interval: 20s
-      port: metrics
-  selector:
-    matchLabels:
-      app: metrics-exporter
+
+**Create ConfigMap:**
+
+```bash
+kubectl create configmap devcm-oradevdb-config --from-file=sample_config.toml -n orao-ha
 ```
+
+## 7. Installing and Configuring Prometheus
+
+1. **Install Prometheus:**
+   ```bash
+   helm repo add prometheus-community [https://prometheus-community.github.io/helm-charts](https://prometheus-community.github.io/helm-charts)
+   helm repo update
+   helm install prometheus prometheus-community/prometheus --create-namespace -n monitoring
+   ```
+
+2. **Update Prometheus Configuration (scrape_configs):**
+
+   ```bash
+   kubectl edit configmap prometheus-server -n monitoring 
+   ```
+   ```yaml
+   - job_name: 'oracle-exporter'
+     metrics_path: '/metrics'
+     scrape_interval: 15s
+     scrape_timeout: 10s
+     static_configs:
+     - targets: ['obs-svc-obs-sample.orao-ha.svc.cluster.local:9161']
+   ```
+
+3. **Restart Prometheus Pod:**
+
+   ```bash
+   kubectl delete pod <prometheus-server-pod-name> -n monitoring
+   ```
+
+## 8. Installing and Configuring Grafana
+
+1. **Install Grafana:**
+   ```bash
+   helm repo add grafana [https://grafana.github.io/helm-charts](https://grafana.github.io/helm-charts)
+   helm repo update
+   helm install oracle-grafana grafana/grafana -n orao-ha
+   ```
+
+2. **Port-Forward Grafana (Optional):**
+   ```bash
+   kubectl port-forward svc/oracle-grafana -n orao-ha 3000:80 
+   ```
+
+3. **Add Prometheus Data Source in Grafana:**
+    - Open Grafana (`http://localhost:3000`).
+    - Go to "Configuration" -> "Data Sources".
+    - Add a new Prometheus data source with URL `http://prometheus-server.monitoring:80`.
+
+
+## 9. Troubleshooting
+
+If you encounter any issues, refer to the OraOperator documentation, check the logs of the pods (`kubectl logs <pod-name> -n <namespace>`), and verify the network connectivity between components.
+
+## 10. Conclusion
+
+You have successfully deployed a highly available Oracle SIDB with Data Guard replication on Kubernetes using OraOperator. You've also established comprehensive monitoring using Prometheus to collect metrics and Grafana to visualize them. This setup provides a scalable and reliable foundation for running your Oracle databases in a Kubernetes environment.
