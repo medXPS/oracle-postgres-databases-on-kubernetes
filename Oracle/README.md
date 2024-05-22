@@ -1,4 +1,4 @@
-Absolutely! Let's craft a comprehensive README.md file based on the detailed information you provided:
+
 
 # Enabling Oracle Single Instance Database High Availability with OraOperator
 
