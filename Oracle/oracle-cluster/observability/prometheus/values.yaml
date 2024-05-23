@@ -1,32 +1,39 @@
-# values.yaml for Prometheus (with Oracle DatabaseObserver configuration)
+# values.yaml for Prometheus on Linode Kubernetes Engine (LKE)
 
-# Global settings
+# Global Settings (Adjust as needed)
 serviceAccounts:
   server:
     create: true
 
+# Storage Configuration (Important for Linode LKE)
+persistence:
+  enabled: true
+  storageClassName: "linode-block-storage-retain"  # Replace with the actual storage class name you want to use on Linode
+  size: 8Gi  # Or your desired storage size
+
+# Server Configuration
 server:
   serviceMonitorSelector:
     matchLabels:
       release: prometheus  # Match your ServiceMonitor label
 
-  # Configure additional scrape configurations 
+  # Scrape Configuration for Oracle Exporter
   scrapeConfigs:
-    - job_name: 'oracle-exporter' # Oracle Database Exporter Job
+    - job_name: 'oracle-exporter'
       metrics_path: '/metrics'
       scrape_interval: 15s
       scrape_timeout: 10s
       static_configs:
-      - targets: ['obs-svc-obs-sample.orao-ha.svc.cluster.local:9161'] 
-        # Replace 'obs-svc-obs-sample.orao-ha.svc.cluster.local:9161' with your DatabaseObserver service details
-        
-
-# Other Prometheus components (optional, customize as needed)
+        - targets: ['obs-svc-obs-sample.orao-ha:9161']   # Ensure correct service name and port
+  
+  # Expose Prometheus UI if needed (Optional)
+  service:
+    type: LoadBalancer 
+  
+# Disable Alertmanager if using Grafana (Optional)
 alertmanager:
-  enabled: false  # Disable if using Grafana for alerting
+  enabled: false
 
+# Enable kube-state-metrics for Kubernetes monitoring (Optional)
 kubeStateMetrics:
-  enabled: true   # Collect Kubernetes cluster metrics
-
-# Additional configuration options...
-# (See the Prometheus Helm chart documentation for more details)
+  enabled: true

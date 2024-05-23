@@ -40,12 +40,12 @@ data:
     )
     mysql_servers =
     (
-        { address="adria-ora-sidb-primary-ext.orao-ha.svc.cluster.local" , port=1521 , hostgroup=10, max_connections=10000 },
-        { address="adria-ora-sidb-standby-ext.orao-ha.svc.cluster.local" , port=1521 , hostgroup=20, max_connections=10000 }
+        { address="adria-ora-sidb-primary.orao-ha.svc.cluster.local" , port=1521 , hostgroup=10, max_connections=10000 },
+        { address="adria-ora-sidb-standby.orao-ha.svc.cluster.local" , port=1521 , hostgroup=20, max_connections=10000 }
     )
     mysql_users =
     (
-        { username = "SYS" , password = "Kube#adria#2024" , default_hostgroup = 10 , active = 1 }
+        { username = "C##MONITOR" , password = "monitor" , default_hostgroup = 10 , active = 1 }
     )
     mysql_query_rules =
     (
