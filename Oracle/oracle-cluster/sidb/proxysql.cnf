@@ -1,56 +1,67 @@
-datadir="/var/lib/proxysql"
- 
-admin_variables=
+datadir = "/var/lib/proxysql"
+
+admin_variables =
 {
-    admin_credentials="admin:admin;cluster:secret"
-    mysql_ifaces="0.0.0.0:6032"
-    refresh_interval=2000
-    cluster_username="cluster"
-    cluster_password="secret"  
+  admin_credentials = "admin:admin"  
+  mysql_ifaces = "0.0.0.0:6032"     
+  refresh_interval = 2000             
+  cluster_enabled = true            # Keep enabled for clustering/read-write splitting
 }
- 
-mysql_variables=
+
+mysql_variables =
 {
-    threads=4
-    max_connections=2048
-    default_query_delay=0
-    default_query_timeout=36000000
-    have_compress=true
-    poll_timeout=2000
-    interfaces="0.0.0.0:6033;/tmp/proxysql.sock"
-    default_schema="information_schema"
-    stacksize=1048576
-    server_version="8.0.23"
-    connect_timeout_server=3000
-    monitor_username="monitor"
-    monitor_password="monitor"
-    monitor_history=600000
-    monitor_connect_interval=60000
-    monitor_ping_interval=10000
-    monitor_read_only_interval=1500
-    monitor_read_only_timeout=500
-    ping_interval_server_msec=120000
-    ping_timeout_server=500
-    commands_stats=true
-    sessions_sort=true
-    connect_retries_on_failure=10
+  threads = 4                          
+  max_connections = 2048               
+  default_query_delay = 0              
+  default_query_timeout = 36000000     
+  have_compress = true                
+  poll_timeout = 2000
+  interfaces = "0.0.0.0:6033;/tmp/proxysql.sock" 
+  default_schema = "YOUR_ORACLE_SCHEMA" # Replace with your actual Oracle schema
+  stacksize = 1048576                 
+  server_version = "19c"              
+  connect_timeout_server = 3000
+  monitor_username = "c##monitor"       
+  monitor_password = "monitor"        
+  monitor_history = 600000
+  monitor_connect_interval = 5000      
+  monitor_ping_interval = 2000
+  monitor_read_only_interval = 1500
+  monitor_read_only_timeout = 500
+  ping_interval_server_msec = 120000   
+  ping_timeout_server = 500
+  commands_stats = true
+  sessions_sort = true
+  connect_retries_on_failure = 10
 }
- 
+
+mysql_query_rules =
+(
+  {rule_id=1, active=1, match_pattern="^(SELECT|WITH)", destination_hostgroup=1, apply=1},
+  {rule_id=2, active=1, match_pattern=".*", destination_hostgroup=0, apply=1}
+)
+
 mysql_servers =
 (
- 
-    { address="adria-ora-sidb-primary.orao-ha.svc.cluster.local" , port=1521 , hostgroup=10, max_connections=10000 },
-    { address="adria-ora-sidb-standby.orao-ha.svc.cluster.local" , port=1521 , hostgroup=20, max_connections=10000 }
+  { hostgroup_id=0, # Writer
+    hostname="adria-ora-sidb-primary.orao-ha.svc.cluster.local", # Primary SIDB Service
+    port=1521, # Oracle Listener Port
+    status="ONLINE"},
+  { hostgroup_id=1, # Reader
+    hostname="adria-ora-sidb-standby.orao-ha.svc.cluster.local", # Standby SIDB Service
+    port=1521,
+    status="ONLINE"}
 )
- 
+
 mysql_users =
 (
-    { username = "myuser", password = "password", default_hostgroup = 10, active = 1 }
+  { username = "c##monitor", password = "monitor", default_hostgroup = 10, active = 1 }
 )
- 
+
 proxysql_servers =
 (
-    { hostname = "proxysql-0.proxysqlcluster", port = 6032, weight = 1 },
-    { hostname = "proxysql-1.proxysqlcluster", port = 6032, weight = 1 },
-    { hostname = "proxysql-2.proxysqlcluster", port = 6032, weight = 1 }
+  { hostname = "proxysql-0.proxysqlcluster", port = 6032, weight = 1 },
+  { hostname = "proxysql-1.proxysqlcluster", port = 6032, weight = 1 },
+  { hostname = "proxysql-2.proxysqlcluster", port = 6032, weight = 1 }
 )
+

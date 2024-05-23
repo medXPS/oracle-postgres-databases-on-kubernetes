@@ -1,163 +1,101 @@
 # Default values for proxysql.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
-# This should be at least 3
-replicaCount: 1
 
 image:
+  registry: docker.io
   repository: proxysql/proxysql
-  pullPolicy: Always
-  # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  # tag: ""  Leave tag as null to get the latest version
+  pullPolicy: IfNotPresent
 
-imagePullSecrets: []
-nameOverride: ""
-fullnameOverride: ""
-
-proxysql:
-  # Admin variables. See https://proxysql.com/documentation/global-variables/admin-variables/
-  # These variables affect settings for ProxySQL on port 6032.
-  admin:
-    # The admin user will always exist but you can customize
-    # the password here. This user will only be allowed from
-    # 127.0.0.1. 
-    adminPassword: "admin"
-
-    # The cluster admin user is different from the admin user above. 
-    # This user is allowed to connect to the cluster "remotely" and
-    # will be used to coordinate and exchange settings across instances.
-    # It is critical that this be a strong password to protect ProxySQL
-    # configuration from tenants.
-    clusterAdminUser: "radmin"
-    clusterAdminPassword: "radmin"
-
-  # MySQL variables. See https://proxysql.com/documentation/global-variables/mysql-variables/
-  # These variables affect settings for ProxySQL on port 6033.
-  mysql:
-    # Monitoring user that should exist on all backend MySQL servers
-    # and should only be allowed to connect and have no further permissions
-    monitoring:
-      username: "monitor"
-      password: "hCbN4h2UJGW3ezUK"
-
-    # Normal MySQL users that should exist at install time. 
-    # These users must match 1:1 with backend MySQL users.
-    # You can specify as many users as you want but generally
-    # it is recommended you do this at runtime.
-    # See https://proxysql.com/documentation/main-runtime/#mysql_users
-    # and https://proxysql.com/documentation/Users-configuration/
-    users:
-      - username: "SYS"
-        password: "Kube#adria#2024"
-
-  # Should ProxySQL configuration be backed by an actual volume?
-  # If set to 'false' the configuration will be stored in an emptyDir
-  # and all data is lost during restarts.
-  # 
-  # If set to 'true' the configuration will be stored on a persistent 
-  # volume using the default storage class.
-  #
-  # Using persistent storage is more durable
-  storage:
-    persistent: false
-    storageClass: "standard"
-
-  # Define custom configuration values here. This configuration 
-  # snippet will be appended to the proxy.cnf file.
-  customConfiguration: |
-    # # Query Rules for Read/Write Split
-    # mysql_query_rules:
-    # (
-    #   {
-    #     rule_id=1
-    #     active=1
-    #     match_pattern="^(SELECT|WITH)"  # Match SELECT and CTEs
-    #     destination_hostgroup=1  # Send to reader group
-    #     apply=1
-    #   },
-    #   {
-    #     rule_id=2
-    #     active=1
-    #     match_pattern=".*"  # Catch-all for writes
-    #     destination_hostgroup=0  # Send to writer group
-    #     apply=1
-    #   }
-    # )
-
-    # # Hostgroups for Writer (Primary) and Reader (Standby)
-    # mysql_servers:
-    # (
-    #   {
-    #     hostgroup_id=0  # Writer
-    #     hostname="adria-ora-sidb-primary"  # Primary SIDB Service
-    #     port=1521  # Oracle Listener Port
-    #     status="ONLINE"
-    #   },
-    #   {
-    #     hostgroup_id=1  # Reader
-    #     hostname="adria-ora-sidb-standby"  # Standby SIDB Service
-    #     port=1521
-    #     status="ONLINE"
-    #   }
-    # )
-    
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # Annotations to add to the service account
-  annotations: {}
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name: ""
+  name: 
 
-podAnnotations: {}
-
-podSecurityContext: {}
-  # fsGroup: 2000
-
-# By default we run the containers as non-root
-securityContext:
-  # capabilities:
-  #   drop:
-  #   - ALL
-  readOnlyRootFilesystem: true
+podSecurityContext:
   runAsNonRoot: true
-  runAsUser: 1000
-  runAsGroup: 1000
+  fsGroup: 999
+  runAsUser: 999
+  runAsGroup: 999
 
+securityContext: {}
+
+## ProxySQL service configuration
 service:
   type: ClusterIP
-  port: 6033
+  proxyPort: 6033
+  adminPort: 6032
+  webPort: 6080
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+# ... (Other sections like resources, nodeSelector, tolerations, etc. remain unchanged)
+
+secret:
+  admin_user: admin
+  admin_password: "monitor"  # Set a strong password
+
+admin_variables:
+  debug: false
+  cluster_enabled: false   # Disabled for single-instance ProxySQL
+  # ... (Other admin variables unchanged) ...
+
+mysql_variables:
+  threads: 4 
+  max_connections: 2048 
+  default_query_delay: 0
+  default_query_timeout: 36000000 
+  have_compress: true
+  poll_timeout: 2000
+  interfaces: "0.0.0.0:6033;/tmp/proxysql.sock" 
+
+  stacksize: 1048576                
+  server_version: "21c"              
+  connect_timeout_server: 3000      
+  monitor_username: "c##monitor"       
+  monitor_password: "monitor" # Set a strong password
+  monitor_history: 600000
+  monitor_connect_interval: 5000      # More frequent monitoring
+  monitor_ping_interval: 2000
+  monitor_read_only_interval: 1500
+  monitor_read_only_timeout: 500
+  ping_interval_server_msec: 120000  
+  ping_timeout_server: 500
+  commands_stats: true
+  sessions_sort: true
+  connect_retries_on_failure: 10
 
 
-nodeSelector: {}
+# Oracle database connections (replace placeholders)
+mysql_servers:
+  - address: "adria-ora-sidb-primary.orao-ha.svc.cluster.local"
+    port: 1521                       
+    hostgroup: 0  # Writer group (for the primary)
+    max_connections: 1000
+  - address: "adria-ora-sidb-standby.orao-ha.svc.cluster.local"   
+    port: 1521                       
+    hostgroup: 1  # Reader group (for the standby)
+    max_connections: 1000
+  
 
-tolerations: []
 
-# Default Anti Affinity rules to prefer putting copies of
-# ProxySQL onto different hosts to keep traffic balanced
-affinity:
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-      - weight: 100
-        podAffinityTerm:
-          labelSelector:
-            matchExpressions:
-              - key: "app.kubernetes.io/name"
-                operator: In
-                values:
-                  - proxysql
-          topologyKey: "kubernetes.io/hostname"
+# Oracle user (replace placeholders)
+mysql_users:
+  - username: "c##monitor"
+    password: "monitor" 
+    default_hostgroup: 0 # Default to writer group 
+    active: 1 
+
+mysql_query_rules: 
+- active: 1
+  match_pattern: "^(SELECT|WITH)"
+  destination_hostgroup: 1
+  apply: 1
+- active: 1
+  match_pattern: ".*"
+  destination_hostgroup: 0
+  apply: 1
+
+
+# Disabled Proxysql Cluster and relevant settings
+use_default_proxysql_servers: false
+proxysql_cluster:
+  enabled: false
+
+# ... (Rest of the configuration remains the same)

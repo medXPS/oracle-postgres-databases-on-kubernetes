@@ -28,6 +28,11 @@ spec:
         - name: proxysql-data
           mountPath: /var/lib/proxysql
           subPath: data
+        env:
+          - name: PRIMARY_SID
+            value: "ORCLP1"
+          - name: STANDBY_SID
+            value: "ORCLS1"
         ports:
         - containerPort: 6033
           name: proxysql-mysql
