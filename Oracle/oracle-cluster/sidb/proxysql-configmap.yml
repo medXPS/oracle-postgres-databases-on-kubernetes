@@ -4,6 +4,7 @@ metadata:
   name: proxysql-configmap
 data:
   proxysql.conf: |
+    
     datadir="/var/lib/proxysql"
     admin_variables=
     {
