@@ -23,7 +23,7 @@ spec:
         name: proxysql
         volumeMounts:
         - name: proxysql-config
-          mountPath: /etc/proxysql/proxysql.cnf
+          mountPath: /etc/proxysql.cnf
           subPath: proxysql.cnf
         - name: proxysql-data
           mountPath: /var/lib/proxysql
