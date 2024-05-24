@@ -9,7 +9,7 @@ serviceAccounts:
 persistence:
   enabled: true
   storageClassName: "linode-block-storage-retain"  # Replace with the actual storage class name you want to use on Linode
-  size: 8Gi  # Or your desired storage size
+  size: 2Gi  # Or your desired storage size
 
 # Server Configuration
 server:
@@ -26,9 +26,7 @@ server:
       static_configs:
         - targets: ['obs-svc-obs-sample.orao-ha:9161']   # Ensure correct service name and port
   
-  # Expose Prometheus UI if needed (Optional)
-  service:
-    type: LoadBalancer 
+
   
 # Disable Alertmanager if using Grafana (Optional)
 alertmanager:
