@@ -42,7 +42,7 @@ spec:
   flashBack: false
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
-  archiveLog: true
+  archiveLog: false
 
   ## Enable/Disable ForceLogging
   forceLog: false
