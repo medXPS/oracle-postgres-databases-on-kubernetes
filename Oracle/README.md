@@ -62,7 +62,7 @@ This comprehensive guide walks you through deploying a highly available Oracle S
    - Deploy the OraOperator using the provided manifest file:
 
      ```bash
-     kubectl apply -f oracle-database-operator.yaml
+     kubectl apply -f Oracle/oracle-database-operator.yaml
      ```
 
 5. **Verify Installation:**
