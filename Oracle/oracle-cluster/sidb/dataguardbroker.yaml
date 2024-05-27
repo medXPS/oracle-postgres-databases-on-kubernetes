@@ -14,7 +14,7 @@ spec:
   ## Standby DB pod CRD Metadata Name to add this DB to DG config
   # add  standby  instances ref names 
   standbyDatabaseRefs:
-    - adria-ora-sidb-standby
+    - adria-ora-sidb-standby1
   ## Type of service . Applicable on cloud enviroments only
   ## if loadBalService : false , service type = "NodePort" . else "LoadBalancer"
   loadBalancer: false
