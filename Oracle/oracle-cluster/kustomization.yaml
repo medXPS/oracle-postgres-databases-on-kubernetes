@@ -11,7 +11,7 @@ resources:
 
   - sidb/singleinstancedatabase.yaml
   - sidb/singleinstancedatabase_standby.yaml
-  # - sidb/dataguardbroker.yaml
+  - sidb/dataguardbroker.yaml
 
   # - sidb/proxysql.yml
   # 
