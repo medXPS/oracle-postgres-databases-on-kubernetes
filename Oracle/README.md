@@ -64,6 +64,12 @@ This comprehensive guide walks you through deploying a highly available Oracle S
      ```bash
      kubectl apply -f Oracle/oracle-database-operator.yaml
      ```
+   - ClusterRole and ClusterRoleBinding for NodePort services
+     ```bash
+     kubectl apply -f Oracle/node-rbac.yaml
+     ```
+     
+      
 
 5. **Verify Installation:**
 
