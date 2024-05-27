@@ -1,11 +1,47 @@
 {
+  "__inputs": [
+    {
+      "name": "Prometheus",
+      "label": "prometheus",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "prometheus",
+      "pluginName": "Prometheus"
+    }
+  ],
+  "__requires": [
+    {
+      "type": "grafana",
+      "id": "grafana",
+      "name": "Grafana",
+      "version": "4.5.1"
+    },
+    {
+      "type": "panel",
+      "id": "graph",
+      "name": "Graph",
+      "version": ""
+    },
+    {
+      "type": "datasource",
+      "id": "prometheus",
+      "name": "Prometheus",
+      "version": "1.0.0"
+    },
+    {
+      "type": "panel",
+      "id": "singlestat",
+      "name": "Singlestat",
+      "version": ""
+    }
+  ],
   "annotations": {
     "list": [
       {
         "builtIn": 1,
         "datasource": {
           "type": "prometheus",
-          "uid": "ddm9obij5pw5ca"
+          "uid": "fdmom6k9wj474a"
         },
         "enable": false,
         "hide": true,
@@ -36,7 +72,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "gridPos": {
         "h": 1,
@@ -50,7 +86,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "refId": "A"
         }
@@ -61,7 +97,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -135,7 +171,7 @@
           "calculatedInterval": "10m",
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -155,7 +191,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -211,7 +247,7 @@
           "calculatedInterval": "10m",
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -232,7 +268,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -297,7 +333,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "expr": "oracledb_activity_user_rollbacks{instance=\"$host\"}",
           "format": "time_series",
@@ -362,7 +398,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "fdmom6k9wj474a"
           },
           "editorMode": "builder",
           "expr": "oracledb_activity_user_commits",
@@ -377,7 +413,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -429,7 +465,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -449,7 +485,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -501,7 +537,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -521,7 +557,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -576,7 +612,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -596,7 +632,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -649,7 +685,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -669,7 +705,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -721,7 +757,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -820,7 +856,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "fdmom6k9wj474a"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -870,7 +906,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "editable": true,
       "error": false,
@@ -916,7 +952,7 @@
           "calculatedInterval": "2m",
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -970,7 +1006,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "editable": true,
       "error": false,
@@ -1016,7 +1052,7 @@
           "calculatedInterval": "2m",
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -1070,7 +1106,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1112,7 +1148,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "expr": "oracledb_resource_current_utilization{instance=\"$host\"}",
           "format": "time_series",
@@ -1204,7 +1240,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "fdmom6k9wj474a"
           },
           "editorMode": "builder",
           "exemplar": false,
@@ -1271,7 +1307,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
+            "uid": "fdmom6k9wj474a"
           },
           "editorMode": "builder",
           "exemplar": false,
@@ -1293,7 +1329,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "editable": true,
       "error": false,
@@ -1339,7 +1375,7 @@
           "calculatedInterval": "2m",
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -1389,7 +1425,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -1452,7 +1488,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "expr": "oracledb_exporter_last_scrape_duration_seconds{instance=\"$host\"}\t",
           "format": "time_series",
@@ -1467,7 +1503,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "ddm9obij5pw5ca"
+        "uid": "fdmom6k9wj474a"
       },
       "fieldConfig": {
         "defaults": {
@@ -1531,7 +1567,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "ddm9obij5pw5ca"
+            "uid": "fdmom6k9wj474a"
           },
           "expr": "oracledb_exporter_scrapes_total{instance=\"$host\"}",
           "format": "time_series",
@@ -1558,7 +1594,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "ddm9obij5pw5ca"
+          "uid": "fdmom6k9wj474a"
         },
         "definition": "",
         "hide": 0,
@@ -1680,7 +1716,7 @@
   },
   "timezone": "browser",
   "title": "OracleDB Monitoring - performance and table space stats",
-  "uid": "6f1a26360",
+  "uid": "fdmom6k9wj474a",
   "version": 16,
   "weekStart": ""
 }
