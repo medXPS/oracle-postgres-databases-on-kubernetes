@@ -18,7 +18,7 @@ spec:
   primaryDatabaseRef: "adria-ora-sidb-primary"
 
   ## Enable this flag for creating Physical Standby Database
-  createAsStandby: true
+  createAs: standby
 
   ## DB edition. N/A if cloning from a Source DB in current K8s cluster (if cloneFrom is set to a database ref)
   ## Valid values for edition are enterprise, standard or express

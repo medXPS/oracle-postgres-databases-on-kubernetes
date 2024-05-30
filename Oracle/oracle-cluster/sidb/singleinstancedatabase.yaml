@@ -15,10 +15,9 @@ spec:
   ## Reference to a source primary database from which
   ## Format: 1. Intra-cluster: you can give name of the primary database or the database connect string in `<host>:<port>/<service_name>` format
   ##         2. Inter-cluster: Database connect string in `<host>:<port>/<service_name>` format
-  primaryDatabaseRef: ""
 
   ## Enable this flag for creating Physical Standby Database
-  createAsStandby: false
+  createAs: primary
 
   ## DB edition. N/A if cloning from a Source DB in current K8s cluster (if cloneFrom is set to a database ref)
   ## Valid values for edition are enterprise, standard or express
@@ -39,7 +38,7 @@ spec:
   pdbName: adriadb
 
   ## Enable/Disable Flashback
-  flashBack: true
+  flashBack: false
 
   ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
   archiveLog: true
