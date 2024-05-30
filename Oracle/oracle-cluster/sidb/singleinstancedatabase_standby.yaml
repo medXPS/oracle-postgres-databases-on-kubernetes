@@ -38,17 +38,7 @@ spec:
   ## PDB name. N/A if cloning from a Source DB (if cloneFrom is set)
   pdbName: adriadb
 
-  ## Enable/Disable Flashback
-  flashBack: false
-
-  ## Enable/Disable ArchiveLog. Should be true to allow DB cloning
-  archiveLog: false
-
-  ## Enable/Disable ForceLogging
-  forceLog: false
-
-  ## Enable TCPS
-  enableTCPS: false
+ 
 
   ## TCPS Certificate Renewal Interval: The time after which TCPS certificate will be renewed if TCPS connections are enabled.
   ## tcpsCertRenewInterval can be in hours(h), minutes(m) and seconds(s); e.g. 4380h, 8760h etc.
