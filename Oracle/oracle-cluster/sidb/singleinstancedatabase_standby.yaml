@@ -11,6 +11,8 @@ spec:
   ## If cloning from an external containerized DB which could be either standalone or in any K8s cluster,
   ## specify connect string as `<host>:<port>/<service_name>` instead of source database ref
   cloneFrom: ""
+  
+  pdbName: adriadb
 
   ## Reference to a source primary database from which
   ## Format: 1. Intra-cluster: you can give name of the primary database or the database connect string in `<host>:<port>/<service_name>` format
