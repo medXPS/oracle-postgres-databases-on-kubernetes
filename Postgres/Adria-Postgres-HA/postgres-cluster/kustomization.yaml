@@ -8,6 +8,7 @@ resources:
 - cert-repl.yaml
 - adria-init-sql.yml
 - postgres.yaml
+- pgpool-ii-deployment.yml
 # - adria-pg-db-pgbouncer-loadbalancer.yml
 # - adria-pg-db-primary-loadbalancer.yml
 
