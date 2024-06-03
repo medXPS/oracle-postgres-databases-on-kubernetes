@@ -16,7 +16,7 @@ spec:
     name: adria-init-sql
   instances:
     - name: adria-postgres-db
-      replicas: 3
+      replicas: 2
       resources:
         requests:
           memory: "1Gi"
