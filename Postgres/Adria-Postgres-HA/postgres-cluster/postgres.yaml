@@ -102,25 +102,25 @@ spec:
           shared_buffers: 1GB
           work_mem: 2MB
   
-  # pgbouncer proxy
-  proxy:
-    pgBouncer:
-      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:ubi8-1.21-3
-      replicas: 1
-      config:
-        global:
-          max_client_conn: "10000"
-      # env:
-      #   - name: MAX_CLIENT_CONN
-      #     value: "10000"
-      affinity:
-        podAntiAffinity:
-          preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 1
-            podAffinityTerm:
-              topologyKey: kubernetes.io/hostname
-              labelSelector:
-                matchLabels:
-                  postgres-operator.crunchydata.com/cluster: adria-pg-db
-                  postgres-operator.crunchydata.com/role: pgbouncer
+  # # pgbouncer proxy
+  # proxy:
+  #   pgBouncer:
+  #     image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbouncer:ubi8-1.21-3
+  #     replicas: 1
+  #     config:
+  #       global:
+  #         max_client_conn: "10000"
+  #     # env:
+  #     #   - name: MAX_CLIENT_CONN
+  #     #     value: "10000"
+  #     affinity:
+  #       podAntiAffinity:
+  #         preferredDuringSchedulingIgnoredDuringExecution:
+  #         - weight: 1
+  #           podAffinityTerm:
+  #             topologyKey: kubernetes.io/hostname
+  #             labelSelector:
+  #               matchLabels:
+  #                 postgres-operator.crunchydata.com/cluster: adria-pg-db
+  #                 postgres-operator.crunchydata.com/role: pgbouncer
   
