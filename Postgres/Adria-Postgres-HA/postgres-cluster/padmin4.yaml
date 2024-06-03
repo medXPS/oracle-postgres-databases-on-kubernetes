@@ -1,0 +1,17 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PGAdmin
+metadata:
+  name: adria-pgadmin  # Choose a name for your pgAdmin instance
+spec:
+  dataVolumeClaimSpec:
+    storageClassName: "linode-block-storage-retain"
+    accessModes:
+      - "ReadWriteOnce"
+    resources:
+      requests:
+        storage: 1Gi  # Adjust storage size if needed
+  serverGroups:
+    - name: adria-group
+      postgresClusterSelector:
+        matchLabels:
+          postgres-operator.crunchydata.com/cluster: adria-pg-db  # Your cluster name

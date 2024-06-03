@@ -153,8 +153,7 @@ config:
     pool_mode: session
     default_pool_size: 40
   userlist:
-    dev-cih: m.JHZbW1URD/xD.1p)|v0=p,
-
+    dev-cih: ;[D/uou2co9-nEcTS(Mj>-5^
 ## Additional containers to be added to the pods
 ##
 extraContainers: []
