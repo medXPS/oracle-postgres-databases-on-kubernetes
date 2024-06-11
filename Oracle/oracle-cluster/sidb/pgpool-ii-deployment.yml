@@ -1,0 +1,145 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: pgpool-config
+  namespace: pgo-ha
+  labels:
+    name: pgpool-config
+data:
+  # pool_passwd: |- 
+  #   mohamed:md5df338d5e2548afdc0fa6c704bfa9ae5b
+  pgpool.conf: |-
+    listen_addresses = '*'
+    port = 9999
+    socket_dir = '/var/run/pgpool'
+    pcp_listen_addresses = '*'
+    pcp_port = 9898
+    pcp_socket_dir = '/var/run/pgpool'
+    backend_hostname0 = 'adria-ora-sidb-primary'
+    backend_port0 = 1521
+    backend_weight0 = 1
+    backend_flag0 = 'ALWAYS_PRIMARY|DISALLOW_TO_FAILOVER'
+    backend_hostname1 = 'adria-ora-sidb-standby1'
+    backend_port1 = 1521
+    backend_weight1 = 1
+    backend_flag1 = 'DISALLOW_TO_FAILOVER'
+    sr_check_period = 10
+    sr_check_period = 0
+    enable_pool_hba = on
+    backend_clustering_mode = 'streaming_replication'
+    num_init_children = 32
+    max_pool = 40
+    child_life_time = 300
+    child_max_connections = 0
+    connection_life_time = 0
+    client_idle_limit = 0
+    connection_cache = on
+    load_balance_mode = on
+    ssl = on
+    failover_on_backend_error = off
+    # allow_clear_text_frontend_auth = on
+
+  pool_hba.conf: |-
+    local   all         all                               trust
+    host    all         all         127.0.0.1/32          trust
+    host    all         all         ::1/128               trust
+    hostssl all         all         0.0.0.0/0             md5
+    host    all         all         0.0.0.0/0             md5
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgpool
+  namespace: pgo-ha
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: pgpool
+  template:
+    metadata:
+      labels:
+        app: pgpool
+    spec:
+      containers:
+      - name: pgpool
+        image: pgpool/pgpool
+        env:
+        - name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
+          value: "adria-ora-sidb-primary"
+        - name: PGPOOL_PARAMS_BACKEND_PORT0
+          value: "1521"
+        - name: PGPOOL_PARAMS_BACKEND_WEIGHT0
+          value: "1"
+        - name: PGPOOL_PARAMS_BACKEND_FLAG0
+          value: "ALWAYS_PRIMARY|DISALLOW_TO_FAILOVER"
+        - name: PGPOOL_PARAMS_BACKEND_HOSTNAME1
+          value: "adria-ora-sidb-standby1"
+        - name: PGPOOL_PARAMS_BACKEND_PORT1
+          value: "1521"
+        - name: PGPOOL_PARAMS_BACKEND_WEIGHT1
+          value: "1"
+        - name: PGPOOL_PARAMS_BACKEND_FLAG1
+          value: "DISALLOW_TO_FAILOVER"
+        - name: PGPOOL_PARAMS_FAILOVER_ON_BACKEND_ERROR
+          value: "off"
+        - name: PGPOOL_PARAMS_ENABLE_POOL_HBA
+          value: "on"
+        - name: PGPOOL_PARAMS_SSL
+          value: "on"
+        - name: POSTGRES_USERNAME
+          value: "SYSTEM"
+        - name: POSTGRES_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: admin-password
+              key: sidb-admin-password
+        - name: PGPOOL_PASSWORD_ENCRYPTION_METHOD
+          value: "scram-sha-256"
+        - name: PGPOOL_ENABLE_POOL_PASSWD
+          value: "true"
+        - name: PGPOOL_SKIP_PASSWORD_ENCRYPTION
+          value: "false"
+        - name: PGPOOL_PARAMS_NUM_INIT_CHILDREN
+          value: "10000"
+        - name: PGPOOL_PARAMS_MAX_POOL
+          value: "40"
+        # The following settings are not required when not using the Pgpool-II PCP command.
+        # To enable the following settings, you must define a secret that stores the PCP user's
+        # username and password.
+        #- name: PGPOOL_PCP_USER
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: pgpool-pcp-secret
+        #      key: username
+        #- name: PGPOOL_PCP_PASSWORD
+        #  valueFrom:
+        #    secretKeyRef:
+        #      name: pgpool-pcp-secret
+        #      key: password
+        # Configure your own TLS certificate.
+        #volumeMounts:
+        #- name: pgpool-tls
+        #  mountPath: /config/tls
+      #volumes:
+      # Configure your own TLS certificate.
+      # If not set, Pgpool-II will automatically generate the TLS certificate if ssl = on.
+      #- name: pgpool-tls
+      #  secret:
+      #    secretName: pgpool-tls
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pgpool
+  namespace: pgo-ha
+spec:
+  selector:
+    app: pgpool
+  ports:
+  - name: pgpool-port
+    protocol: TCP
+    port: 9999
+    targetPort: 9999
