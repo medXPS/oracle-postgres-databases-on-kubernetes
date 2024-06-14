@@ -17,7 +17,7 @@ resources:
   # - sidb/proxysql.yml
   # 
 
-  # - observability/databaseobserver.yaml
+  - observability/databaseobserver.yaml
   # # - observability/metrics-service-monitor.yaml
 
   
