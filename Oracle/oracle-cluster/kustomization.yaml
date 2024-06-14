@@ -10,9 +10,9 @@ resources:
 
 
   - sidb/singleinstancedatabase.yaml
-  # - sidb/singleinstancedatabase_standby.yaml
+  - sidb/singleinstancedatabase_standby.yaml
   # - sidb/dataguardbroker.yaml
-  # # - sidb/pgpool-ii-deployment.yml
+
 
   # - sidb/proxysql.yml
   # 
