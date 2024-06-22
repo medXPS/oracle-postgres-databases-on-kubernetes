@@ -23,13 +23,7 @@ spec:
     spec:
       template:
         spec:
-          containers:
-            - name: fk
-              image: busybox:latest  # A minimal image for testing
-              command: ["/bin/sleep", "60"] # Sleep for 60 seconds
-              volumeMounts:
-                - name: oracle-backup-volume
-                  mountPath: /backup  # Mount the PVC at /backup inside the container
+          
           restartPolicy: Never   # Don't restart the pod if it fails
           volumes:
             - name: oracle-backup-volume
