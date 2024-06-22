@@ -5,27 +5,59 @@ metadata:
 
 spec:
   accessModes:
-    - ReadWriteOnce  # Allow read-write access by a single node
+    - ReadWriteOnce 
   resources:
     requests:
-      storage: 2Gi  # Request 20 GiB of storage (adjust as needed)
-  storageClassName: standard  # Use the 'standard' StorageClass in Minikube
+      storage: 2Gi  
+  storageClassName: standard  
+
 ---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: primary-db-backup
-  
+
 spec:
-  schedule: "* * * * *"   # Set to run every minute, but won't do anything
-  concurrencyPolicy: Forbid  # Prevent overlapping runs
+  schedule: "* * * * *"   
+  concurrencyPolicy: Forbid  
   jobTemplate:
     spec:
       template:
         spec:
-          
-          restartPolicy: Never   # Don't restart the pod if it fails
+          nodeSelector: 
+            kubernetes.io/hostname: <your-node-name>
           volumes:
             - name: oracle-backup-volume
               persistentVolumeClaim:
                 claimName: oracle-backup
+          restartPolicy: Never   
+          hostPID: true
+          hostNetwork: true
+          containers: # <--- The missing 'containers' field
+            - name: oracle-backup
+              command: ["/bin/bash", "-c"]
+              args:
+                - |
+                  rman target / @/backup_script.sh
+
+              volumeMounts:
+                - name: oracle-backup-volume
+                  mountPath: /backup  
+                - name: backup-script
+                  configMap:
+                    name: oracle-backup-script
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: oracle-backup-script
+ 
+data:
+  backup_script.sh: |
+    #!/bin/bash
+    rman target / <<EOF
+    backup database plus archivelog;
+    delete noprompt obsolete;
+    exit;
+    EOF
