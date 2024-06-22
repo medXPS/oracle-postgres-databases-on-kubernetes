@@ -8,7 +8,7 @@ serviceAccounts:
 # Storage Configuration (Important for Linode LKE)
 persistence:
   enabled: true
-  storageClassName: "linode-block-storage-retain"  # Replace with the actual storage class name you want to use on Linode
+  storageClassName: "standard"  # Replace with the actual storage class name you want to use on Linode
   size: 2Gi  # Or your desired storage size
 
 # Server Configuration

@@ -41,7 +41,7 @@
         "builtIn": 1,
         "datasource": {
           "type": "prometheus",
-          "uid": "fdmom6k9wj474a"
+          "uid": "bdpkail8xacqoe"
         },
         "enable": false,
         "hide": true,
@@ -72,7 +72,7 @@
       "collapsed": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "gridPos": {
         "h": 1,
@@ -86,7 +86,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "refId": "A"
         }
@@ -97,7 +97,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -171,7 +171,7 @@
           "calculatedInterval": "10m",
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -191,7 +191,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -247,7 +247,7 @@
           "calculatedInterval": "10m",
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -268,7 +268,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -333,7 +333,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "expr": "oracledb_activity_user_rollbacks{instance=\"$host\"}",
           "format": "time_series",
@@ -398,7 +398,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "editorMode": "builder",
           "expr": "oracledb_activity_user_commits",
@@ -413,7 +413,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -465,7 +465,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -485,7 +485,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -537,7 +537,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -557,7 +557,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -612,7 +612,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -632,7 +632,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -685,7 +685,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -705,7 +705,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -757,7 +757,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "disableTextWrap": false,
           "editorMode": "builder",
@@ -856,7 +856,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "editorMode": "code",
           "exemplar": false,
@@ -906,7 +906,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "editable": true,
       "error": false,
@@ -952,7 +952,7 @@
           "calculatedInterval": "2m",
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -1006,7 +1006,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "editable": true,
       "error": false,
@@ -1052,7 +1052,7 @@
           "calculatedInterval": "2m",
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -1106,7 +1106,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -1148,7 +1148,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "expr": "oracledb_resource_current_utilization{instance=\"$host\"}",
           "format": "time_series",
@@ -1240,7 +1240,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "editorMode": "builder",
           "exemplar": false,
@@ -1307,7 +1307,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "editorMode": "builder",
           "exemplar": false,
@@ -1329,7 +1329,7 @@
       "dashes": false,
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "editable": true,
       "error": false,
@@ -1375,7 +1375,7 @@
           "calculatedInterval": "2m",
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "datasourceErrors": {},
           "errors": {},
@@ -1425,7 +1425,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1488,7 +1488,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "expr": "oracledb_exporter_last_scrape_duration_seconds{instance=\"$host\"}\t",
           "format": "time_series",
@@ -1503,7 +1503,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "fdmom6k9wj474a"
+        "uid": "bdpkail8xacqoe"
       },
       "fieldConfig": {
         "defaults": {
@@ -1567,7 +1567,7 @@
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "fdmom6k9wj474a"
+            "uid": "bdpkail8xacqoe"
           },
           "expr": "oracledb_exporter_scrapes_total{instance=\"$host\"}",
           "format": "time_series",
@@ -1594,7 +1594,7 @@
         },
         "datasource": {
           "type": "prometheus",
-          "uid": "fdmom6k9wj474a"
+          "uid": "bdpkail8xacqoe"
         },
         "definition": "",
         "hide": 0,
@@ -1716,7 +1716,7 @@
   },
   "timezone": "browser",
   "title": "OracleDB Monitoring - performance and table space stats",
-  "uid": "fdmom6k9wj474a",
+  "uid": "bdpkail8xacqoe",
   "version": 16,
   "weekStart": ""
 }
