@@ -12,5 +12,5 @@ resources:
   - sidb/singleinstancedatabase.yaml
   - sidb/singleinstancedatabase_standby.yaml
   - sidb/dataguardbroker.yaml
-  # - observability/databaseobserver.yaml
+  - observability/databaseobserver.yaml
  
