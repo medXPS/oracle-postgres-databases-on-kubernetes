@@ -50,7 +50,7 @@ spec:
   persistence:
     size: 6Gi
     ## a storage class should be created, in local env we will use `standard` (default minikube storage class)
-    storageClass: "linode-block-storage-retain"
+    storageClass: "standard"
     accessMode: "ReadWriteOnce"
     volumeName: ""
 
