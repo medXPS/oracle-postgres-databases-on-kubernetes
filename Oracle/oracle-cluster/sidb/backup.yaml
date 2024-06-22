@@ -1,3 +1,16 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: oracle-backup
+
+spec:
+  accessModes:
+    - ReadWriteOnce  # Allow read-write access by a single node
+  resources:
+    requests:
+      storage: 2Gi  # Request 20 GiB of storage (adjust as needed)
+  storageClassName: standard  # Use the 'standard' StorageClass in Minikube
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
