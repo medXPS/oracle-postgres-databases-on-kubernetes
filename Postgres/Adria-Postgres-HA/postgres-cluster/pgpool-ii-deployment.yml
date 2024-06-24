@@ -53,7 +53,7 @@ metadata:
   name: pgpool
   namespace: pgo-ha
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: pgpool
