@@ -19,11 +19,11 @@ spec:
       replicas: 2
       resources:
         requests:
+          memory: "1Gi"
+          cpu: "100m"
+        limits:
           memory: "2Gi"
           cpu: "500m"
-        limits:
-          memory: "4Gi"
-          cpu: "1000m"
       dataVolumeClaimSpec:
         storageClassName: "standard"  #create custom  storage class / here we switched to ibm cloud managed kubernetes 
         accessModes:
