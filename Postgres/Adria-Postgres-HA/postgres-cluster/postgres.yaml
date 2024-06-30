@@ -22,8 +22,8 @@ spec:
           memory: "1Gi"
           cpu: "100m"
         limits:
-          memory: "2Gi"
-          cpu: "500m"
+          memory: "1Gi"
+          cpu: "300m"
       dataVolumeClaimSpec:
         storageClassName: "standard"  #create custom  storage class / here we switched to ibm cloud managed kubernetes 
         accessModes:
