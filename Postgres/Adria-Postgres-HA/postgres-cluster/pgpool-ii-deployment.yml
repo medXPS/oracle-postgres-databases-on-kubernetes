@@ -66,6 +66,7 @@ spec:
       - name: pgpool
         image: pgpool/pgpool
         env:
+
         - name: PGPOOL_PARAMS_BACKEND_HOSTNAME0
           value: "adria-pg-db-primary"
         - name: PGPOOL_PARAMS_BACKEND_PORT0
@@ -89,11 +90,11 @@ spec:
         - name: PGPOOL_PARAMS_SSL
           value: "on"
         - name: POSTGRES_USERNAME
-          value: "dev-cih"
+          value: "adria-dba"
         - name: POSTGRES_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: adria-pg-db-pguser-dev-cih
+              name: adria-pg-db-pguser-adria-dba
               key: password
         - name: PGPOOL_PASSWORD_ENCRYPTION_METHOD
           value: "scram-sha-256"
@@ -104,7 +105,7 @@ spec:
         - name: PGPOOL_PARAMS_NUM_INIT_CHILDREN
           value: "10000"
         - name: PGPOOL_PARAMS_MAX_POOL
-          value: "1"
+          value: "40"
         # The following settings are not required when not using the Pgpool-II PCP command.
         # To enable the following settings, you must define a secret that stores the PCP user's
         # username and password.

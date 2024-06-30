@@ -5,11 +5,6 @@ metadata:
   namespace: pgo-ha
 data:
   init.sql: |
-    -- grant privileges
-    GRANT CONNECT ON DATABASE cih TO "dev-cih-ro" ;
-    GRANT USAGE ON SCHEMA public TO "dev-cih-ro" ;
-    GRANT CREATE ON SCHEMA public TO "dev-cih-ro" ;
-    GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO "dev-cih-ro" ;
-    ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO "dev-cih-ro" ;
-
+    -- PUT SQL Script here (it can be used once during the PostgreSQL cluster deployement)
+    
     
