@@ -105,7 +105,7 @@ spec:
         - name: PGPOOL_PARAMS_NUM_INIT_CHILDREN
           value: "10000"
         - name: PGPOOL_PARAMS_MAX_POOL
-          value: "40"
+          value: "10"
         # The following settings are not required when not using the Pgpool-II PCP command.
         # To enable the following settings, you must define a secret that stores the PCP user's
         # username and password.
