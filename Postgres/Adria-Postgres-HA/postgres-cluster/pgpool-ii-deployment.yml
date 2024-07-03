@@ -103,7 +103,7 @@ spec:
         - name: PGPOOL_SKIP_PASSWORD_ENCRYPTION
           value: "false"
         - name: PGPOOL_PARAMS_NUM_INIT_CHILDREN
-          value: "10000"
+          value: "1000"
         - name: PGPOOL_PARAMS_MAX_POOL
           value: "10"
         # The following settings are not required when not using the Pgpool-II PCP command.
