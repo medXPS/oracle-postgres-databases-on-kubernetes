@@ -35,7 +35,7 @@ vagrant ssh controller1
 ### Step 3: Deploy Kubernetes Cluster with Ansible
 Once logged into controller1, deploy the Kubernetes cluster using Ansible:
 ```sh
-ansible-playbook -i /Kubernetes-cluster-provisioning/inventory -f Kubernetes-cluster-provisioning/setup.yaml
+ansible-playbook -i inventory/inventory.ini -f provisioning/setup.yaml
 
 ```
 
