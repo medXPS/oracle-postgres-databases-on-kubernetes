@@ -105,7 +105,7 @@ Create a new application in ArgoCD named `postgres-monitoring`:
 Port forward Grafana to access it:
 
 ```bash
-kubectl port-forward svc/grafana 3000:80 -n monitoring
+kubectl port-forward svc/crunchy-grafana 3000:80 -n monitoring
 ```
 
 Navigate to `http://localhost:3000` and log in to Grafana. Select customized dashboards from `/Postgres/Postgres-cluster-deployement/monitoring/custom-grafana-dash`.
