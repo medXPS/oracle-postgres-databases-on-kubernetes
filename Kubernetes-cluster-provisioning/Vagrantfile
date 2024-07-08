@@ -18,38 +18,50 @@ Vagrant.configure("2") do |config|
       node.vm.hostname = "controller#{i}"
       node.vm.network "private_network", ip: "#{IP_NTW}#{NODE_IP_START + i}"
       node.vm.network "forwarded_port", guest: 22, host: "#{2710 + i}"
-      node.vm.provision "shell", inline: <<-SHELL
 
-        # Software update & install Ansible
-        add-apt-repository --yes --update ppa:ansible/ansible
-        apt-get update
-        apt-get install software-properties-common -y
-        apt-get install ansible -y
+      if i == 1
+        node.vm.provision "shell", inline: <<-SHELL
+          # Software update & install Ansible
+          apt-get update
+          apt-get install -y software-properties-common ansible
 
-        # Generate SSH public key and copy it on host machine
-        mkdir -p /home/vagrant/.ssh
-        yes | ssh-keygen -t rsa -b 2048 -f /home/vagrant/.ssh/id_rsa -q -N ""
-        chown -R vagrant:vagrant /home/vagrant/.ssh
-        chmod 700 /home/vagrant/.ssh
-        chmod 600 /home/vagrant/.ssh/authorized_keys
-        cat /home/vagrant/.ssh/id_rsa.pub > /vagrant/controller1_pubkey
-        systemctl restart sshd
+          # Generate SSH public key and copy it to the shared folder
+          mkdir -p /home/vagrant/.ssh
+          yes | ssh-keygen -t rsa -b 2048 -f /home/vagrant/.ssh/id_rsa -q -N ""
+          chown -R vagrant:vagrant /home/vagrant/.ssh
+          chmod 700 /home/vagrant/.ssh
+          chmod 600 /home/vagrant/.ssh/id_rsa
+          chmod 600 /home/vagrant/.ssh/id_rsa.pub
+          cp /home/vagrant/.ssh/id_rsa.pub /vagrant/controller1_pubkey
+          systemctl restart sshd
 
-        # Generate inventory file
-        echo "[kubemasters]" > /home/vagrant/workstation/inventory.ini
-        for i in {1..#{NUM_CONTROLLER_NODE}}
-        do
-            echo "kubemaster$i ansible_host=192.168.56.$(( #{NODE_IP_START} + $i ))" >> /home/vagrant/workstation/inventory.ini
-        done
-        echo "[kubeworkers]" >> /home/vagrant/workstation/inventory.ini
-        for i in {1..#{NUM_NODES}}
-        do
-            echo "kubeworker$(($i)) ansible_host=192.168.56.$(( #{NODE_IP_START}  + $i +1))" >> /home/vagrant/workstation/inventory.ini
-            done
-      SHELL
+          # Generate inventory file
+          mkdir -p /home/vagrant/workstation
+          echo "[kubemasters]" > /home/vagrant/workstation/inventory.ini
+          for i in {1..#{NUM_CONTROLLER_NODE}}
+          do
+              echo "kubemaster$i ansible_host=192.168.56.$(( #{NODE_IP_START} + $i ))" >> /home/vagrant/workstation/inventory.ini
+          done
+          echo "[kubeworkers]" >> /home/vagrant/workstation/inventory.ini
+          for i in {1..#{NUM_NODES}}
+          do
+              echo "kubeworker$(($i)) ansible_host=192.168.56.$(( #{NODE_IP_START}  + $i +1))" >> /home/vagrant/workstation/inventory.ini
+          done
+        SHELL
 
-       # Synchronize inventory.ini file
-      node.vm.synced_folder "./provisioning", "/home/vagrant/workstation"
+        # Synchronize inventory.ini file
+        node.vm.synced_folder "./provisioning", "/home/vagrant/workstation"
+      else
+        node.vm.provision "shell", inline: <<-SHELL
+          # Adds the public key generated on controller1 to this controller's authorized_keys
+          mkdir -p /home/vagrant/.ssh
+          cp /vagrant/controller1_pubkey /home/vagrant/.ssh/authorized_keys
+          chown -R vagrant:vagrant /home/vagrant/.ssh
+          chmod 700 /home/vagrant/.ssh
+          chmod 600 /home/vagrant/.ssh/authorized_keys
+          systemctl restart sshd
+        SHELL
+      end
     end
   end
 
@@ -63,20 +75,19 @@ Vagrant.configure("2") do |config|
       end
 
       node.vm.hostname = "worker#{i}"
-      node.vm.network "private_network", ip: "#{IP_NTW}#{NODE_IP_START + i+1}"
-      node.vm.network "forwarded_port", guest: 22, host: "#{2720 + i+1}"
-      node.vm.network "forwarded_port", guest: 80, host: "#{8080 + i+1}"
+      node.vm.network "private_network", ip: "#{IP_NTW}#{NODE_IP_START + i + 1}"
+      node.vm.network "forwarded_port", guest: 22, host: "#{2720 + i + 1}"
+      node.vm.network "forwarded_port", guest: 80, host: "#{8080 + i + 1}"
       node.vm.provision "shell", inline: <<-SHELL
         apt-get update
 
-        # Adds controller public key to worker's authorized_keys
+        # Adds the public key generated on controller1 to this worker's authorized_keys
         mkdir -p /home/vagrant/.ssh
-        cat /vagrant/controller1_pubkey >> /home/vagrant/.ssh/authorized_keys
+        cp /vagrant/controller1_pubkey /home/vagrant/.ssh/authorized_keys
         chown -R vagrant:vagrant /home/vagrant/.ssh
         chmod 700 /home/vagrant/.ssh
         chmod 600 /home/vagrant/.ssh/authorized_keys
         systemctl restart sshd
-
       SHELL
     end
   end
