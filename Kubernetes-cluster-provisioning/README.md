@@ -1,4 +1,3 @@
-# Kubernetes Cluster Deployement 
 # Kubernetes Cluster Setup with Vagrant and Ansible
 
 ## Architecture
