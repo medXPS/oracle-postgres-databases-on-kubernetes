@@ -1,4 +1,4 @@
-```
+
 # Deployment of Crunchy Data PostgreSQL Operator on Kubernetes
 
 This document provides step-by-step instructions for deploying the Crunchy Data PostgreSQL Operator on Kubernetes, configuring it using ArgoCD, and setting up monitoring with Grafana.
@@ -81,10 +81,8 @@ Create a new application in ArgoCD named `postgres-cluster`:
 
 Add the helm repository:
 
-```bash
-helm repo add medxps https://medxps.github.io/helm-charts/
-helm repo update
-```
+ repo : medxps https://medxps.github.io/helm-charts/
+
 
 Create a new application in ArgoCD named `pgbouncer`:
 
