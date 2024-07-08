@@ -1,3 +1,0 @@
-ssl:
-  enabled: true
-  secretName: pgo-ha/adria-pg-db-cluster-cert
