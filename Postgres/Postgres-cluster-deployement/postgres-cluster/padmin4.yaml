@@ -4,7 +4,7 @@ metadata:
   name: adria-pgadmin  # Choose a name for your pgAdmin instance
 spec:
   dataVolumeClaimSpec:
-    storageClassName: "standard"
+    storageClassName: "standard"  #fix storage class issue 
     accessModes:
       - "ReadWriteOnce"
     resources:
