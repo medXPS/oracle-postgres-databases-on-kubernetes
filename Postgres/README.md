@@ -113,6 +113,40 @@ Navigate to `http://localhost:3000` and log in to Grafana. Select customized das
 ## Step 9: Connect Your Java Application
 
 You can expose the PgBouncer port or add a LoadBalancer layer to link your Java application with the PostgreSQL cluster.
+## Step 10: Setting Up pgAdmin for PostgreSQL on Kubernetes
+
+This guide outlines the steps to set up pgAdmin to manage PostgreSQL databases deployed on Kubernetes using the Crunchy Data PostgreSQL Operator.
+
+
+
+### 1. Create pgAdmin Admin User Secret
+
+To create an admin user in pgAdmin, follow these steps to set up a Kubernetes secret that stores the admin user's password.
+
+```sh
+kubectl create secret generic pgadmin-password-secret \
+  --from-literal=adria-dba-password=adria-dba-admin-2024 \
+  -n pgo-ha
+  ```
+
+  
+### 2. Deploy pgAdmin with Admin User and Server Discovery
+Deploy pgAdmin with an admin user and configure it to discover servers from your PostgreSQL clusters using 
+
+```yaml
+  serverGroups:
+  - name: name-discovery
+    postgresClusterName: adria-pg-db
+      
+  ```
+
+### 3. . Access pgAdmin Interface
+Once deployed, access the pgAdmin web interface using port forwarding:
+
+```sh
+  kubectl port-forward pod/pgadmin-pod-name -n pgo-ha 5050:5050
+
+  ```
 
 ## Conclusion
 
