@@ -17,7 +17,6 @@ spec:
       requests:
         storage: 1Gi  # Adjust storage size if needed
   serverGroups:
-    - name: adria-group
-      postgresClusterSelector:
-        matchLabels:
-          postgres-operator.crunchydata.com/cluster: adria-pg-db  # Your cluster name
+  - name: name-discovery
+    postgresClusterName: adria-pg-db
+      
