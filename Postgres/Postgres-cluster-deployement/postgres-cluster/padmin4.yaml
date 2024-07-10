@@ -3,6 +3,12 @@ kind: PGAdmin
 metadata:
   name: adria-pgadmin  # Choose a name for your pgAdmin instance
 spec:
+  users:
+  - username: admin@adria-bt.com
+    role: Administrator
+    passwordRef:
+      name: pgadmin-password-secret
+      key: adria-dba-password
   dataVolumeClaimSpec:
     storageClassName: "standard"  #fix storage class issue 
     accessModes:
